@@ -1,48 +1,35 @@
 <DOCTYPE html>
   <html>
     <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Careers</title>
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
       <style>
-        h1 {
-          font-size: 40px;
-          font-weight: normal;
-          font-family: Roboto;
-          text-align: center;
-          color: rgb(110,110,110)
-        }
-        #banner{
+        #banner {
           width: 100%;
           height: 360px;
           object-fit: cover;
         }
-        h2{
-          font-size: 32px;
-          font-weight: normal;
-          font-family: Roboto;
-          color: rgb(100,100,100);
-          text-align: center;
-        }
-        .bodytext{
-          font-family: Roboto;
-          color: rgb(90,90,90);
-        }
-        #container{
-          max-width: 720px;
-          margin: 0 auto;
-        }
       </style>
+     
     </head>
     <body>
-      <div id="container">  
-      <h1>Careers</h1>
-      <img id="banner" src="https://1a9ca408-3d4b-43ff-a36c-18c2db87f97a-00-2sfkm8chpz1c9.kirk.replit.dev/static/banner.jpg" alt="Careers">
-      <h2>About Careers</h2>
-      <p class="bodytext">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
-      <h2>Open Positions</h2>
-      <p class="bodytext">Todo-- Show the jobs here..</p>
-        <div style="text-align: center;">
-      <button>Contact Us</button>
-          <p>Copyright 2025, Careers</p>
+      <div class="container">  
+      <h1 class="text-center mt-2 mb-4"> {{company_name}} Careers</h1>
+      <img class="img-fluid" id="banner" src="https://1a9ca408-3d4b-43ff-a36c-18c2db87f97a-00-2sfkm8chpz1c9.kirk.replit.dev/static/banner.jpg" alt="Careers">
+      <h2 class="text-center mt-2 mb-4">About Aachar</h2>
+      <p class="lead">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+      <h2 class="text-center mt-2 mb-4">Open Positions</h2>
+      <div>
+        {% for job in jobs %}
+           {% include 'jobitem.html' %}
+        {% endfor %}  
+      </div>
+        <div class="text-center">
+      <button class="btn btn-primary btn-lg">Contact Us</button>
+          <p class="mt-4">Copyright 2025, Careers</p>
         </div>
       
       </div>
