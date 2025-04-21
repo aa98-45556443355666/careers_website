@@ -1,11 +1,8 @@
 from sqlalchemy import create_engine, text
+import os
 
-db_connection_str = (
-    "mysql+pymysql://aarush_0312-b2832:Q8cF%2B1J%2CT8t%23qzj3z%3D4P;U(@"
-    "svc-3482219c-a389-4079-b18b-d50662524e8a-shared-dml.aws-virginia-6.svc.singlestore.com:3333/"
-    "db_aarush__a0ad9"
-    "?charset=utf8mb4"
-)
+db_connection_str = os.environ['DB_CONNECTION_STR']
+
 
 engine = create_engine(
     db_connection_str,
@@ -16,10 +13,26 @@ engine = create_engine(
     }
 )
 
-try:
+def load_jobs_from_db():
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT * FROM jobs"))
-        for row in result:
-            print(row)
-except Exception as e:
-    print("Error:", e)
+        res = conn.execute(text("SELECT * FROM jobs"))
+        jobs=[]
+        for row in res.all():
+            jobs.append(row._asdict())
+        return jobs    
+
+# with engine.connect() as conn:
+#     result = conn.execute(text("SELECT * FROM jobs"))
+#     res_dicts=[]
+
+#     for row in result.all():
+#         res_dicts.append(row._asdict())
+
+
+
+
+
+
+
+    
+    
