@@ -1,5 +1,5 @@
 from flask import Flask,render_template,jsonify,request
-from database import load_jobs_from_db,load_job_from_db
+from database import load_jobs_from_db,load_job_from_db,add_application_to_db
 
 app=Flask(__name__)
 
@@ -23,7 +23,10 @@ def showing_job(id):
 @app.route('/job/<id>/apply', methods=['POST'])
 def job_apply(id):
     val=request.form #data is accessed using '.form'
-    return jsonify(val)
+    job=load_job_from_db(id)
+
+    add_application_to_db(id,val)
+    return render_template('application_submit.html',application=val,job=job)
 
 
 

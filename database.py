@@ -30,13 +30,24 @@ def load_job_from_db(id):
             return None
         else:
             return rows[0]._asdict()
-# with engine.connect() as conn:
-#     result = conn.execute(text("SELECT * FROM jobs"))
-#     res_dicts=[]
 
-#     for row in result.all():
-#         res_dicts.append(row._asdict())
-
+def add_application_to_db(job_id,val):
+    with engine.connect() as conn:
+        query =text("INSERT INTO applications (job_id,full_name,email,linkedin,education,work_experience,cv_link) VALUES (:job_id, :full_name, :email, :linkedin, :education, :work_experience, :cv_link)"
+                 )
+        conn.execute(query,
+                     {
+                         "job_id": job_id,
+                         "full_name": val['full_name'],
+                         "email": val['email'],
+                         "linkedin": val['linkedin'],
+                         "education": val['education'],
+                         "work_experience": val['work_experience'],
+                         "cv_link": val['cv_link']
+                     }
+                    )
+                                
+                    
 
 
 
