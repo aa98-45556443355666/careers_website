@@ -46,8 +46,7 @@ def add_application_to_db(job_id,val):
                          "cv_link": val['cv_link']
                      }
                     )
-                                
-                    
+        conn.commit()
 
 
 
