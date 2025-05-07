@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine, text
+from werkzeug.security import check_password_hash
 import os
 
 db_connection_str = os.environ['DB_CONNECTION_STR']
@@ -50,8 +51,37 @@ def add_application_to_db(job_id,val):
 
 
 
+def get_admin(username):
+    with engine.connect() as conn:
+        res = conn.execute(text("SELECT * FROM admins WHERE user_name = :username"),
+                          {"username": username})
+        row = res.fetchone()
+        return row._asdict() if row else None
+
+def load_applications_from_db():
+    with engine.connect() as conn:
+        query = text("""
+            SELECT applications.*, jobs.title as job_title 
+            FROM applications 
+            JOIN jobs ON applications.job_id = jobs.id
+        """)
+        res = conn.execute(query)
+        return [row._asdict() for row in res.all()]
 
 
-
-    
-    
+def add_admin_to_db(username, password_hash):
+    with engine.connect() as conn:
+        try:
+            result = conn.execute(text("""
+                INSERT INTO admins (user_name, password_hash)
+                VALUES (:username, :password_hash)
+            """), {
+                "username": username,
+                "password_hash": password_hash
+            })
+            conn.commit()
+            return True
+        except Exception as e:
+            print(f"Database Error: {str(e)}")  # Detailed error logging
+            conn.rollback()
+            return False
