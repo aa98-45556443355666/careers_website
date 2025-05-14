@@ -35,12 +35,12 @@ pip install -r requirements.txt
 ```
 4. Create a ```.env``` file in the project root
 ```
-pip install -r requirements.txt
+DB_CONNECTION_STR=mysql://your_username:your_password@localhost/your_database
+SECRET_KEY=your_secret_key
 ```
 5. Run the app
 ```
-DB_CONNECTION_STR=mysql://your_username:your_password@localhost/your_database
-SECRET_KEY=your_secret_key
+python app.py
 ```
 6. Visit in browser
 ```
