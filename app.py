@@ -4,6 +4,8 @@ from flask import session, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_admin, load_applications_from_db,add_admin_to_db
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 app=Flask(__name__)
