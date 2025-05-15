@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, text
 from werkzeug.security import check_password_hash
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 db_connection_str = os.environ['DB_CONNECTION_STR']
 
