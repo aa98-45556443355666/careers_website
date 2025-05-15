@@ -3,3 +3,4 @@ gunicorn
 singlestoredb
 sqlalchemy
 pymysql
+python-dotenv
