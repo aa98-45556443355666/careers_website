@@ -6,12 +6,15 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
        <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
       {% include 'navbar.html' %}
       {% include 'banner.html'%}
 
       <div class="container">  
+        <div class="custom-card p-4">
          <h1 class="text-center mt-2 mb-4"> Aachar Careers</h1>
         <p>Your application for the role of <b>{{job['title']}}</b> has been submitted successfully. We will review your application and get back to you soon.</p>
       <h5>Full Name</h5>
@@ -26,7 +29,9 @@
       <div class='mb-2'>{{application['work_experience']}}</div>
       <h5>CV Link</h5>
       <div class='mb-2'>{{application['cv_link']}}</div>
+           </div>
       </div>
        {% include 'footer.html' %}
+      <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
     </body>
   </html>
