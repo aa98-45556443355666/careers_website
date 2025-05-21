@@ -71,6 +71,103 @@ def load_applications_from_db():
         return [row._asdict() for row in res.all()]
 
 
+def move_to_accepted(application_id):
+    with engine.connect() as conn:
+        try:
+            with conn.begin():
+                # 1. Fetch the application row
+                application = conn.execute(
+                    text("SELECT * FROM applications WHERE id = :id"),
+                    {"id": application_id}
+                ).fetchone()
+
+                # 2. If no such application, abort
+                if not application:
+                    return False
+
+                # 3. Convert Row to dict via _asdict()
+                data = application._asdict()
+
+                # 4. Insert into accepted_applications using named parameters
+                conn.execute(
+                    text("""
+                        INSERT INTO accepted_applications 
+                        (job_id, full_name, email, linkedin, education, work_experience, cv_link)
+                        VALUES (:job_id, :full_name, :email, :linkedin, :education, :work_experience, :cv_link)
+                    """),
+                    {
+                        "job_id":           data["job_id"],
+                        "full_name":        data["full_name"],
+                        "email":            data["email"],
+                        "linkedin":         data["linkedin"],
+                        "education":        data["education"],
+                        "work_experience":  data["work_experience"],
+                        "cv_link":          data["cv_link"]
+                    }
+                )
+
+                # 5. Delete from applications
+                conn.execute(
+                    text("DELETE FROM applications WHERE id = :id"),
+                    {"id": application_id}
+                )
+
+                return True
+        except Exception as e:
+            # Log and return False on any error
+            print(f"Error moving to accepted: {str(e)}")
+            return False
+
+
+def move_to_rejected(application_id):
+    with engine.connect() as conn:
+        try:
+            with conn.begin():
+                # 1. Fetch the application row
+                application = conn.execute(
+                    text("SELECT * FROM applications WHERE id = :id"),
+                    {"id": application_id}
+                ).fetchone()
+
+                # 2. If no such application, abort
+                if not application:
+                    return False
+
+                # 3. Convert Row to dict via _asdict()
+                data = application._asdict()
+
+                # 4. Insert into rejected_applications using named parameters
+                conn.execute(
+                    text("""
+                        INSERT INTO rejected_applications 
+                        (job_id, full_name, email, linkedin, education, work_experience, cv_link)
+                        VALUES (:job_id, :full_name, :email, :linkedin, :education, :work_experience, :cv_link)
+                    """),
+                    {
+                        "job_id":           data["job_id"],
+                        "full_name":        data["full_name"],
+                        "email":            data["email"],
+                        "linkedin":         data["linkedin"],
+                        "education":        data["education"],
+                        "work_experience":  data["work_experience"],
+                        "cv_link":          data["cv_link"]
+                    }
+                )
+
+                # 5. Delete from applications
+                conn.execute(
+                    text("DELETE FROM applications WHERE id = :id"),
+                    {"id": application_id}
+                )
+
+                return True
+        except Exception as e:
+            # Log and return False on any error
+            print(f"Error moving to rejected: {str(e)}")
+            return False
+
+
+
 def add_admin_to_db(username, password_hash):
     with engine.connect() as conn:
         try:

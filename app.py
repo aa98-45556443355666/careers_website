@@ -1,8 +1,8 @@
 from flask import Flask,render_template,jsonify,request
 from database import load_jobs_from_db,load_job_from_db,add_application_to_db
-from flask import session, redirect, url_for
+from flask import session, redirect, url_for,flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import get_admin, load_applications_from_db,add_admin_to_db
+from database import get_admin, load_applications_from_db,add_admin_to_db,move_to_accepted, move_to_rejected
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -35,6 +35,33 @@ def job_apply(id):
 
     add_application_to_db(id,val)
     return render_template('application_submit.html',application=val,job=job)
+
+
+from flask import flash
+
+@app.route('/approve_application/<int:app_id>', methods=['POST'])
+def approve_application(app_id):
+    if not session.get('admin_logged_in'):
+        return redirect('/admin/login')
+
+    if move_to_accepted(app_id):
+        flash('Application approved successfully!', 'success')
+    else:
+        flash('Error approving application', 'error')
+
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/reject_application/<int:app_id>', methods=['POST'])
+def reject_application(app_id):
+    if not session.get('admin_logged_in'):
+        return redirect('/admin/login')
+
+    if move_to_rejected(app_id):
+        flash('Application rejected successfully!', 'success')
+    else:
+        flash('Error rejecting application', 'error')
+
+    return redirect(url_for('admin_dashboard'))
 
 # Add these routes
 @app.route('/admin/signup', methods=['GET', 'POST'])
