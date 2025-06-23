@@ -12,7 +12,7 @@ app=Flask(__name__)
 
 app.secret_key = os.environ.get('SECRET_KEY')
 @app.route('/')
-def hello_world():
+def home():
     jobs=load_jobs_from_db()
     return render_template('home.html', jobs=jobs,company_name='Aachar')
 
@@ -35,9 +35,6 @@ def job_apply(id):
 
     add_application_to_db(id,val)
     return render_template('application_submit.html',application=val,job=job)
-
-
-from flask import flash
 
 @app.route('/approve_application/<int:app_id>', methods=['POST'])
 def approve_application(app_id):
