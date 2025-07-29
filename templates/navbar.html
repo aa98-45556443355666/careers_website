@@ -6,9 +6,7 @@
            class="d-inline-block align-text-top">
       Aachar
     </a>
-
     <div class="d-flex align-items-center gap-2">
-      <!-- Theme Toggle -->
       <button id="themeToggle" class="btn btn-sm btn-outline-secondary">
         <i class="bi bi-moon-stars"></i>
       </button>
@@ -18,7 +16,7 @@
           <a class="btn btn-outline-primary me-2" href="/admin/dashboard">Dashboard</a>
           <a class="btn btn-outline-danger" href="/admin/logout">Logout</a>
         {% else %}
-          <a class="btn btn-outline-primary" href="/admin/login">Admin</a>
+          <a class="btn btn-outline-primary" href="/admin/login">User</a>
         {% endif %}
       {% elif request.path == '/admin/dashboard' and session.get('admin_logged_in') %}
         <a class="btn btn-outline-danger" href="/admin/logout">Logout</a>

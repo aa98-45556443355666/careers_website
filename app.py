@@ -30,7 +30,7 @@ def showing_job(id):
 
 @app.route('/job/<id>/apply', methods=['POST'])
 def job_apply(id):
-    val=request.form #data is accessed using '.form'
+    val=request.form 
     job=load_job_from_db(id)
 
     add_application_to_db(id,val)
@@ -60,7 +60,6 @@ def reject_application(app_id):
 
     return redirect(url_for('admin_dashboard'))
 
-# Add these routes
 @app.route('/admin/signup', methods=['GET', 'POST'])
 def admin_signup():
     if session.get('admin_logged_in'):
@@ -72,7 +71,6 @@ def admin_signup():
         password = request.form.get('password', '').strip()
         confirm_password = request.form.get('confirm_password', '').strip()
 
-        # Enhanced validation
         if not username or not password:
             error = 'Username and password are required'
         elif len(username) < 4:
